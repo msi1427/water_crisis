@@ -8,6 +8,7 @@ from operator import itemgetter
 import math, os, sys, logging
 import pandas as pd
 from pprint import pprint
+from tqdm.notebook import tqdm
 
 
 def preprocess_bert(path_to_dataset, train_filepath, val_filepath):
@@ -46,8 +47,9 @@ def preprocess_bert(path_to_dataset, train_filepath, val_filepath):
 
     # tokenize the sentences - 
     tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=False)
-    tokenized_texts = [tokenizer.tokenize(sent) for sent in sentences]
-    tokenized_attribs = [tokenizer.tokenize(attrib) for attrib in attribs]
+    print("Tokenization going on =>")
+    tokenized_texts = [tokenizer.tokenize(sent) for sent in tqdm(sentences)]
+    tokenized_attribs = [tokenizer.tokenize(attrib) for attrib in tqdm(attribs)]
     # print(tokenized_texts[0])
 
     MAX_LEN_SENT = 128
